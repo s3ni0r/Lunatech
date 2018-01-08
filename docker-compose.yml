@@ -1,0 +1,25 @@
+version: '3'
+services:
+#  api:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    command: sbt run
+#    image: lunatech-api
+#    volumes:
+#    - .:/usr/src/api
+#    ports:
+#    - 9000:9000
+#    depends_on:
+#      - db
+  db:
+    image: postgres:9.5
+    volumes:
+      - ./data/lunatech.sql:/docker-entrypoint-initdb.d/lunatech.sql
+    environment:
+      - POSTGRES_USER=lunatech
+      - POSTGRES_PASSWORD=lunatech
+      - POSTGRES_DB=lunatech
+      - PGDATA=/data
+    ports:
+      - 5432:5432
