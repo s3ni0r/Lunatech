@@ -1,3 +1,5 @@
+**Subject`**
+
 Write a nice web application in Scala that will ask the user for two actions : Query or Reports.
 
 2.1 Query Option will ask the user for the country name or code and print the airports & runways at each airport. 
@@ -19,3 +21,13 @@ Share the code on Github/Bitbucket at least 3h before your review so that we hav
 
 I would suggest if possible that you use Play2 Scala and Play Framework. However if you prefer to do a Node.JS / React / Redux solution, that's ok.
 All in all : we want to confirm your skills and so, try to build a complete application. Don't forget to include a basic README in your project.
+
+### TODO
+
+- [X] Create App and Api skeleton
+- [X] Write api logic draft
+- [ ] Write api tests
+- [ ] Integrate Swagger
+- [ ] Organise configuration
+- [ ] Build Front
+- [ ] Set up docker-stack
