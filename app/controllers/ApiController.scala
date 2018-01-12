@@ -9,12 +9,22 @@ import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 import model.Queries
+import play.api.Configuration
 import play.api.libs.json.Json
 
 @Singleton
-class ApiController @Inject()(cc: ControllerComponents, actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends AbstractController(cc) with Queries {
-  lazy implicit val db  = Transactor.fromDriverManager[IO](
-    "org.postgresql.Driver", "jdbc:postgresql://localhost:5432/lunatech", "lunatech", "lunatech"
+class ApiController @Inject()(
+    config: Configuration,
+    cc: ControllerComponents,
+    actorSystem: ActorSystem)(implicit exec: ExecutionContext)
+    extends AbstractController(cc)
+    with Queries {
+
+  lazy implicit val db = Transactor.fromDriverManager[IO](
+    config.get[String]("db.default.driver"),
+    config.get[String]("db.default.url"),
+    config.get[String]("db.default.username"),
+    config.get[String]("db.default.password")
   )
 
   def airportRunwaysByCountryName(name: String) = Action.async {
