@@ -42,7 +42,7 @@ class ApiController @Inject()(
     Future(Ok(Json.toJson(stats)))
   }
 
-  def runwaysSurfacesByCountry = Action.async{
+  def runwaysSurfacesByCountry = Action.async {
     val res = getRunwaysSurfacesByCountry()
     Future(Ok(Json.toJson(res)))
   }

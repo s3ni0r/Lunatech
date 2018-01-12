@@ -8,11 +8,13 @@ import doobie.util.transactor.Transactor
 
 trait Queries {
 
-  def executeQuery[T](query: Query0[T])(implicit db: Transactor.Aux[IO, Unit]): List[T] = {
+  def executeQuery[T](query: Query0[T])(
+      implicit db: Transactor.Aux[IO, Unit]): List[T] = {
     query.list.transact(db).unsafeRunSync
   }
 
-  def RunQueryAndFormat(query: doobie.Query0[QueryParser])(implicit db: Transactor.Aux[IO, Unit]) = {
+  def RunQueryAndFormat(query: doobie.Query0[QueryParser])(
+      implicit db: Transactor.Aux[IO, Unit]) = {
     executeQuery(query)
       .groupBy(_.country)
       .mapValues {
@@ -29,37 +31,43 @@ trait Queries {
       }
   }
 
-  def getAirportRunwaysByCountryName(countryName: String)(implicit db: Transactor.Aux[IO, Unit]) = {
+  def getAirportRunwaysByCountryName(countryName: String)(
+      implicit db: Transactor.Aux[IO, Unit]) = {
 
     val query: Query0[QueryParser] = sql"""SELECT *
         FROM country c JOIN airport a ON c.code = a.iso_country JOIN runway r ON a.id = r.airport_ref
-        WHERE c.name like $countryName|| '%'
+        WHERE LOWER(c.name) like LOWER($countryName) || '%'
     """.query[QueryParser]
 
     RunQueryAndFormat(query)
   }
 
-  def getAirportRunwaysByCountryCode(countryCode: String)(implicit db: Transactor.Aux[IO, Unit]) = {
+  def getAirportRunwaysByCountryCode(countryCode: String)(
+      implicit db: Transactor.Aux[IO, Unit]) = {
 
     val query: Query0[QueryParser] = sql"""SELECT *
         FROM country c JOIN airport a ON c.code = a.iso_country JOIN runway r ON a.id = r.airport_ref
-        WHERE c.code like $countryCode|| '%'
+        WHERE LOWER(c.code) like LOWER($countryCode) || '%'
     """.query[QueryParser]
 
     RunQueryAndFormat(query)
   }
 
-  def getCountriesWithTopFlopTenNbrOfRunway()(implicit db: Transactor.Aux[IO, Unit]): List[AirportsByCountry] = {
+  def getCountriesWithTopFlopTenNbrOfRunway()(
+      implicit db: Transactor.Aux[IO, Unit]): List[AirportsByCountry] = {
     val query: Query0[AirportsByCountry] = sql"""SELECT c.name, count(*)
         FROM country c JOIN airport a ON c.code = a.iso_country
         GROUP BY c.name
     """.query[AirportsByCountry]
 
     val rows = executeQuery(query)
-    rows.sortWith(_.nbrOfAirports > _.nbrOfAirports).take(10) ++ rows.sortWith(_.nbrOfAirports < _.nbrOfAirports).take(10)
+    rows.sortWith(_.nbrOfAirports > _.nbrOfAirports).take(10) ++ rows
+      .sortWith(_.nbrOfAirports < _.nbrOfAirports)
+      .take(10)
   }
 
-  def getRunwaysSurfacesByCountry()(implicit db: Transactor.Aux[IO, Unit]): List[SurfaceByCountry] = {
+  def getRunwaysSurfacesByCountry()(
+      implicit db: Transactor.Aux[IO, Unit]): List[SurfaceByCountry] = {
     val query: Query0[SurfaceByCountryResponse] = sql"""SELECT c.name, r.surface
         FROM country c JOIN airport a ON c.code = a.iso_country JOIN runway r ON a.id = r.airport_ref
         GROUP BY c.name, r.surface
@@ -70,6 +78,7 @@ trait Queries {
       .mapValues(_.map(_.surface.getOrElse("-")))
       .map {
         case (k, v) => SurfaceByCountry(k, v)
-      }.toList
+      }
+      .toList
   }
 }
