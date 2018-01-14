@@ -26,8 +26,8 @@ All in all : we want to confirm your skills and so, try to build a complete appl
 
 - [X] Create App and Api skeleton
 - [X] Write api logic draft
-- [ ] Write api tests
+- [X] Write api tests
 - [ ] Integrate Swagger
-- [ ] Organise configuration
+- [X] Organise configuration
 - [ ] Build Front
 - [ ] Set up docker-stack
