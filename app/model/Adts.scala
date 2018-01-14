@@ -19,14 +19,18 @@ package object Data {
                      local_code: Option[String],
                      home_link: Option[String],
                      wikipedia_link: Option[String],
-                     keywords: Option[String]
-                    )
+                     keywords: Option[String])
 
   object Airport {
     implicit val format = Json.format[Airport]
   }
 
-  case class Country(id: Long, code: String, name: String, continent: String, wikipedia_link: String, keywords: Option[String])
+  case class Country(id: Long,
+                     code: String,
+                     name: String,
+                     continent: String,
+                     wikipedia_link: String,
+                     keywords: Option[String])
 
   object Country {
     implicit val format = Json.format[Country]
@@ -51,8 +55,7 @@ package object Data {
                     he_longitude_deg: Option[Float],
                     he_elevation_ft: Option[Long],
                     he_heading_degT: Option[Float],
-                    he_displaced_threshold_ft: Option[Long]
-                   )
+                    he_displaced_threshold_ft: Option[Long])
 
   object Runway {
     implicit val format = Json.format[Runway]

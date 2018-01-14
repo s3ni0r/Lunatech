@@ -2,7 +2,9 @@ package controllers
 
 import javax.inject._
 
+import Data.{QueryParser, QueryResult}
 import akka.actor.ActorSystem
+import api.Api
 import cats.effect.IO
 import doobie.util.transactor.Transactor
 import play.api.mvc._
@@ -13,12 +15,9 @@ import play.api.Configuration
 import play.api.libs.json.Json
 
 @Singleton
-class ApiController @Inject()(
-    config: Configuration,
-    cc: ControllerComponents,
-    actorSystem: ActorSystem)(implicit exec: ExecutionContext)
-    extends AbstractController(cc)
-    with Queries {
+class ApiController @Inject()(api: Api, config: Configuration, cc: ControllerComponents, actorSystem: ActorSystem)(
+    implicit exec: ExecutionContext)
+    extends AbstractController(cc) {
 
   lazy implicit val db = Transactor.fromDriverManager[IO](
     config.get[String]("db.default.driver"),
@@ -28,22 +27,22 @@ class ApiController @Inject()(
   )
 
   def airportRunwaysByCountryName(name: String) = Action.async {
-    val countries = getAirportRunwaysByCountryName(name)
+    val countries = api.getAirportRunwaysByCountryName(name)
     Future(Ok(Json.toJson(countries)))
   }
 
   def airportRunwaysByCountryCode(code: String) = Action.async {
-    val countries = getAirportRunwaysByCountryName(code)
+    val countries = api.getAirportRunwaysByCountryCode(code)
     Future(Ok(Json.toJson(countries)))
   }
 
   def countriesWithTopFlopTenNbrOfRunway = Action.async {
-    val stats = getCountriesWithTopFlopTenNbrOfRunway()
+    val stats = api.getCountriesWithTopFlopTenNbrOfRunway()
     Future(Ok(Json.toJson(stats)))
   }
 
   def runwaysSurfacesByCountry = Action.async {
-    val res = getRunwaysSurfacesByCountry()
+    val res = api.getRunwaysSurfacesByCountry()
     Future(Ok(Json.toJson(res)))
   }
 }
