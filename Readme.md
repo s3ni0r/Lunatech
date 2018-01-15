@@ -35,7 +35,7 @@ All in all : we want to confirm your skills and so, try to build a complete appl
 ### How to run
 ```
 docker-compose up
-``
+```
 
 ### Swagger
 ```
