@@ -1,0 +1,10 @@
+---
+  swagger: "2.0"
+  info:
+    title: "Airports API"
+    description: "Api that exposes Airport query and report actions"
+    version: "1.0.0"
+  consumes:
+    - application/json
+  produces:
+    - application/json
