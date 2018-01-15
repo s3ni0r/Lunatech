@@ -1,8 +1,6 @@
 package controllers
 
 import javax.inject._
-
-import Data.{QueryParser, QueryResult}
 import akka.actor.ActorSystem
 import api.Api
 import cats.effect.IO
@@ -10,7 +8,6 @@ import doobie.util.transactor.Transactor
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
-import model.Queries
 import play.api.Configuration
 import play.api.libs.json.Json
 

@@ -1,7 +1,7 @@
 package test.utils
 
-import Data.{AirportsByCountry, QueryResult, SurfaceByCountry}
-import model.Queries
+import models.Data._
+import models.Queries
 import tools.DbConnection
 import utils.Formatter
 

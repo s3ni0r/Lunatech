@@ -1,10 +1,10 @@
 package api
 import javax.inject.Singleton
 
-import Data.{AirportsByCountry, QueryResult, SurfaceByCountry}
+import models.Data.{AirportsByCountry, QueryResult, SurfaceByCountry}
 import cats.effect.IO
 import doobie.util.transactor.Transactor.Aux
-import model.Queries
+import models.Queries
 import utils.Formatter
 
 trait Api extends Queries with Formatter {

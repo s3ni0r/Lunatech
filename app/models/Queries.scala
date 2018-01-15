@@ -1,4 +1,4 @@
-package model
+package models
 
 import doobie.Query0
 import cats.effect.IO

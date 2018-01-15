@@ -1,6 +1,6 @@
 package utils
 
-import Data._
+import models.Data._
 
 trait Formatter {
   def formatAirportRunwaysByCountry(rows: List[QueryParser]): List[QueryResult] = {

@@ -1,6 +1,7 @@
+package models
 import play.api.libs.json.Json
 
-package object Data {
+object Data {
 
   case class Airport(id: Long,
                      ident: String,
