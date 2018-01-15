@@ -1,4 +1,4 @@
-**Subject`**
+**Subject**
 
 Write a nice web application in Scala that will ask the user for two actions : Query or Reports.
 
@@ -36,3 +36,8 @@ All in all : we want to confirm your skills and so, try to build a complete appl
 ```
 docker-compose up
 ``
+
+### Swagger
+```
+http://localhost:9000/docs/swagger-ui/index.html at base http://localhost:9000/assets/swagger.json
+```
