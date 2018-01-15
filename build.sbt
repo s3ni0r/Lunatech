@@ -2,7 +2,7 @@ name := "Lunatech"
 
 version := "1.0"
 
-lazy val `lunatech` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `lunatech` = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases"
@@ -30,7 +30,27 @@ libraryDependencies ++= Seq(
   "org.tpolecat"  %% "doobie-core"     % doobieVersion,
   "org.tpolecat"  %% "doobie-postgres" % doobieVersion,
   "org.tpolecat"  %% "doobie-specs2"   % doobieVersion,
-  "org.typelevel" %% "cats-core"       % "1.0.1"
+  "org.typelevel" %% "cats-core"       % "1.0.1",
+  "org.webjars" % "swagger-ui" % "2.2.0"
 ) ++ testDependencies
 
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")
+
+swaggerDomainNameSpaces := Seq("models")
+
+mainClass in assembly := Some("play.core.server.ProdServerStart")
+fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value)
+
+assemblyMergeStrategy in assembly := {
+  case manifest if manifest.contains("MANIFEST.MF") =>
+    // We don't need manifest files since sbt-assembly will create
+    // one with the given settings
+    MergeStrategy.discard
+  case referenceOverrides if referenceOverrides.contains("reference-overrides.conf") =>
+    // Keep the content for all reference-overrides.conf files
+    MergeStrategy.concat
+  case x =>
+    // For all the other files, use the default sbt-assembly merge strategy
+    val oldStrategy = (assemblyMergeStrategy in assembly).value
+    oldStrategy(x)
+}
