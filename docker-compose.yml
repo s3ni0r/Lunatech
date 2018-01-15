@@ -1,21 +1,19 @@
 version: '3'
 services:
-#  api:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    command: sbt run
-#    image: lunatech-api
-#    volumes:
-#    - .:/usr/src/api
-#    ports:
-#    - 9000:9000
-#    depends_on:
-#      - db
+  api:
+    image: s3ni0r/lunatech-api:1.0
+    ports:
+    - 9000:9000
+    links:
+      - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    restart: on-failure
   db:
-    image: postgres:9.5
-    volumes:
-      - ./data/lunatech.sql:/docker-entrypoint-initdb.d/lunatech.sql
+    image: s3ni0r/postgres:9.5
     environment:
       - POSTGRES_USER=lunatech
       - POSTGRES_PASSWORD=lunatech

@@ -1,0 +1,3 @@
+FROM postgres:9.5
+
+ADD ./data/lunatech.sql /docker-entrypoint-initdb.d/lunatech.sql

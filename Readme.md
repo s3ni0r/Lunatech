@@ -22,12 +22,17 @@ Share the code on Github/Bitbucket at least 3h before your review so that we hav
 I would suggest if possible that you use Play2 Scala and Play Framework. However if you prefer to do a Node.JS / React / Redux solution, that's ok.
 All in all : we want to confirm your skills and so, try to build a complete application. Don't forget to include a basic README in your project.
 
-### TODO
+### PROGRESS
 
 - [X] Create App and Api skeleton
 - [X] Write api logic draft
 - [X] Write api tests
-- [ ] Integrate Swagger
+- [X] Integrate Swagger
 - [X] Organise configuration
 - [ ] Build Front
-- [ ] Set up docker-stack
+- [X] Set up docker-stack
+
+### How to run
+```
+docker-compose up
+``

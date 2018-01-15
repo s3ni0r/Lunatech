@@ -1,0 +1,8 @@
+FROM openjdk:8-jdk-alpine
+
+RUN mkdir -p /usr/src
+WORKDIR /usr/src
+ADD ./target/scala-2.12/Lunatech-assembly-1.0.jar Lunatech-api.jar
+
+EXPOSE 9000
+CMD java -Dplay.http.secret.key=welldamnsorry -Dconfig.resource=application-prod.conf -jar Lunatech-api.jar
